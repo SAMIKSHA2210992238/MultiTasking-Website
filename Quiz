@@ -1,0 +1,61 @@
+answer = input('kya aap quiz khelne ke liye tyaar hai? (yes/no) :')
+score = 0
+total_questions = 8
+if answer.lower() == 'yes':
+    answer = input('Question 1:Name the prime  minister of India')
+    if answer.lower() == 'shree narendra modi':
+        score += 1
+        print('bahut badhiya')
+    else:
+        print('Itna toh aana chahiye tha:)')
+
+    answer = input('Question 2: In which month, the ‘World Tsunami Awareness Day’ observed?? ')
+    if answer.lower() == 'november':
+        score += 1
+        print('sahi javaab')
+    else:
+        print('galat javaab :(')
+
+    answer = input('Question 3:Which state/UT hosted the ‘Army Commanders’ Conference’??')
+    if answer.lower() == 'new delhi':
+        score += 1
+        print('sahi javaab')
+    else:
+        print('galat javaab :(')
+
+    answer = input('Question 4:Which city is the host of ‘Agro Tech India -Agri and Food Technology Fair’ in 2022?')
+    if answer.lower() == 'chandigarh':
+        score += 1
+        print('sahi javaab')
+    else:
+        print('galat javaab :(')
+    answer = input('Question 5:Which city is the host of the ‘World Travel Market (WTM) 2022?')
+    if answer.lower() == 'london':
+        score += 1
+        print('sahi javaab')
+    else:
+        print('galat javaab :(')
+    answer = input('Question 6:Mathura-Vrindavan is a pilgrimage centre in which state?')
+    if answer.lower() == 'uttar pradesh':
+        score += 1
+        print('bahut badhiya')
+    else:
+        print('galat javaab :(')
+    answer = input(
+        'Question 7:DigiLocker is a documents exchange platform under which Union Ministry (a)ministry of electronics and IT (b)-ministry of education')
+    if answer.lower() == 'a':
+        score += 1
+        print('bahut badhiya')
+    else:
+        print('galat javaab:(')
+    answer = input('Question 8:Which company is set to acquire the packaged water giant Bisleri?')
+    if answer.lower() == 'tata consumer products':
+        score += 1
+        print('sahi javaab')
+    else:
+        print('galat javaab :(')
+
+print('Thankyou for Playing this small quiz game, you attempted', score, "questions correctly!")
+marks = (score / total_questions) * 100
+print('percentage obtained:', marks)
+print('Alvida!,fir milenge kabhi agar khuda ne chaha')
