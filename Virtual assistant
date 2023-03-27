@@ -1,0 +1,146 @@
+import datetime
+import os
+import webbrowser
+import requests
+import wolframalpha as wolframalpha
+from ecapture import ecapture as ec
+# import ec as ec
+import pyttsx3  # pip install pyttsx3
+import speech_recognition as sr  # pip install speechRecognition
+import wikipedia  # pip install wikipedia
+
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+# print(voices[0].id)
+engine.setProperty('voice', voices[0].id)
+
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+def wishMe():
+    hour = int(datetime.datetime.now().hour)
+    if 0 <= hour < 12:
+        speak("Good Morning Sir")
+
+    elif 12 <= hour < 18:
+        speak("Good Afternoon sir")
+
+    else:
+        speak("Good Evening Sir")
+
+    speak("I am nova , your personal assistant. what can i help you with sir?")
+
+
+def takeCommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 0.5
+        audio = r.listen(source)
+    # it converts the audio input into string
+
+    try:
+        print("Recognizing...")
+        query = r.recognize_google(audio, language='en-in')
+        print("User said: {query}\n")
+    except Exception as e:
+        # print(e)
+        print("Say that again please...")
+        return "None"
+    return query
+
+
+if _name_ == "_main_":
+    wishMe()
+    while True:
+        query = takeCommand().lower()
+
+        # logic for executing tasks based on query
+        if "how are you" in query:
+            speak("I'm fine sir, how can i help you ?")
+        elif "who are you" in query or "what are you" in query:
+            speak("Sir I am nova , your personal assistant ")
+        elif 'wikipedia' in query:
+            speak('Searching Wikipedia...please wait')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=2)
+            speak("wikipedia says")
+            print(results)
+            speak(results)
+        elif 'what can you do' in query:
+            speak('i am nova your personal assistant. I am programmed to do minor tasks like opening google ,youtube,'
+                  'gmail,amazon,flipkart,stackoverflow,predict the time,takea photo, search wikipedia, search '
+                  'location, predict weather in different cities , play music and get top news headline')
+        elif 'open youtube' in query:
+            webbrowser.open("youtube.com")
+
+        elif 'open google' in query:
+            webbrowser.open('https://www.google.co.in/')
+
+        elif 'open stackoverflow' in query:
+            webbrowser.open('https://stackoverflow.com/')
+
+        elif 'open amazon' in query:
+            webbrowser.open('https://www.amazon.in/')
+
+        elif 'open flipkart' in query:
+            webbrowser.open('https://www.flipkart.com/')
+
+        elif 'open gmail' in query:
+            webbrowser.open('https://mail.google.com/')
+
+        elif 'play music' in query:
+            webbrowser.open('https://www.youtube.com/watch?v=7c3-Gei5j4w')
+
+        elif "camera" in query or "take a photo" in query or "take a picture" in query:
+            ec.capture(0, "robo camera", "img.jpg")
+
+        elif "who created you" in query:
+            speak("sir i was created by a team of 3 members, syntax error consisting of samiksha , saksham and samar"
+                  "in the year 2022")
+
+        elif "where is" in query:
+            query = query.replace("where is", "")
+            location = query
+            speak("User asked to Locate")
+            speak(location)
+            webbrowser.open("https://www.google.nl / maps / place/" + location + "")
+
+        elif "weather" in query:
+            api_key = "8ef61edcf1c576d65d836254e11ea420"
+            base_url = "https://api.openweathermap.org/data/2.5/weather?"
+            speak("whats the city name")
+            city_name = takeCommand()
+            complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+            response = requests.get(complete_url)
+            x = response.json()
+            if x["cod"] != "404":
+                y = x["main"]
+                current_temperature = y["temp"]
+                current_humidiy = y["humidity"]
+                z = x["weather"]
+                weather_description = z[0]["description"]
+                speak(" Temperature in kelvin unit is " +
+                      str(current_temperature) +
+                      "\n humidity in percentage is " +
+                      str(current_humidiy) +
+                      "\n description  " +
+                      str(weather_description))
+                print(" Temperature in kelvin unit = " +
+                      str(current_temperature) +
+                      "\n humidity (in percentage) = " +
+                      str(current_humidiy) +
+                      "\n description = " +
+                      str(weather_description))
+            else:
+                speak(" City Not Found ")
+        elif 'the time' in query:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            speak(f"Sir, the time is {strTime}")
+
+        elif 'nova quit' in query or 'exit' in query or 'close' in query or 'stop' in query or 'nova stop' in query:
+            speak("Thank you for using nova Sir")
+            exit()
