@@ -1,0 +1,30 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from source.SnakeGame.main import *
+
+
+def home(request):
+    context = {
+        "title": "Trigger python logic"
+    }
+    return render(request, "home/home.html", context)
+
+
+def snakeGame(request):
+    playGame();
+    return HttpResponse("""<html><p>Playing Snake Game!</p>
+    
+    <p>This game was written in Python, using the turtle module. </p>
+    This code sets the game window, listens for key events to change the direction of the snake , and continuously moves
+     the snake and</p>
+      <p>updates the game state. The snake grows when it eats food and the game ends when the snake hits boundary or 
+    itself.</p> 
+    <p>Snake Game is a classic game which first appeared in 1997, the best in its category to play in 
+    free time or to relieve stress,the simple graphics of the game make it easy to play.</p>
+
+<p>Your role will be to guide the snake using the arrow keys in the right path in order to eat all the fruit and avoid 
+crashing into the wall or the snake itself. </p>
+
+<p>The Snake Game is suitable for all ages as it is free from any violent scenes. There are also many versions of the 
+game to suit all tastes so it never gets outdated.</p><p> Enjoy the snake game anytime!</p></html>""")
+
